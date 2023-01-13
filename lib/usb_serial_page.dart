@@ -20,11 +20,20 @@ class TesPage extends StatelessWidget {
           onPressed: () async {
             List<UsbDevice> devices = await UsbSerial.listDevices();
             if (devices.isEmpty) {
-              print('is Empty');
+              const Text('No Devices');
             }
             if (devices.isNotEmpty) {
-              print(devices);
+              Text('Devices are detected : $devices');
             }
+            UsbPort? port;
+            port = await devices[0].create();
+            bool openResult = await port!.open();
+            if (!openResult) {
+              const Text('Failed to Open Port');
+              return;
+            }
+            await port.setDTR(true);
+            await port.setRTS(true);
           },
 
           // Get the usb serial data by read

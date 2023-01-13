@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freelance_serial/homepage.dart';
-import 'package:freelance_serial/tes.dart';
+import 'package:freelance_serial/usb_serial_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TesPage(),
+      home: const TesPage(),
     );
   }
 }

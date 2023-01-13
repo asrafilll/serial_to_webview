@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:usb_serial/usb_serial.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class WebViewPage extends StatefulWidget {
+  const WebViewPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<WebViewPage> createState() => _WebViewPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _WebViewPageState extends State<WebViewPage> {
   late WebViewController _controller;
 
   final domainName = 'https://flutter.dev';

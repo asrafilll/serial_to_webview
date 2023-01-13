@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:usb_serial/usb_serial.dart';
 
@@ -49,6 +50,14 @@ class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
                   }
                   await port.setDTR(true);
                   await port.setRTS(true);
+                  port.setPortParameters(115200, UsbPort.DATABITS_8,
+                      UsbPort.STOPBITS_1, UsbPort.PARITY_NONE);
+                  port.inputStream?.listen((Uint8List event) {
+                    setState(() {
+                      _currentStatus = '$event';
+                    });
+                    port?.close();
+                  });
                 }
               },
 

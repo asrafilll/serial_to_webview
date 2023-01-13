@@ -10,6 +10,7 @@ class USBSerialCheckerPage extends StatefulWidget {
 
 class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
   String _currentStatus = 'Not Connected';
+  bool _readyToOpenPort = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +35,21 @@ class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
                 if (devices.isNotEmpty) {
                   setState(() {
                     _currentStatus = 'Devices are detected : $devices';
+                    _readyToOpenPort = true;
                   });
                 }
-                // UsbPort? port;
-                // port = await devices[0].create();
-                // bool openResult = await port!.open();
-                // if (!openResult) {
-                //   const Text('Failed to Open Port');
-                //   return;
-                // }
-                // await port.setDTR(true);
-                // await port.setRTS(true);
+                UsbPort? port;
+                if (_readyToOpenPort == true) {
+                  port = await devices[0].create();
+                  bool openResult = await port!.open();
+                  if (!openResult) {
+                    setState(() {
+                      _currentStatus = 'Failed to Open Port';
+                    });
+                  }
+                  await port.setDTR(true);
+                  await port.setRTS(true);
+                }
               },
 
               // Get the usb serial data by read

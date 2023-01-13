@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:usb_serial/usb_serial.dart';
 
 class WebViewPage extends StatefulWidget {
   const WebViewPage({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class _WebViewPageState extends State<WebViewPage> {
     return Scaffold(
       body: FutureBuilder(
         future: Future.delayed(
-          Duration(seconds: 5),
+          const Duration(seconds: 5),
           (() => ''),
         ),
         builder: (context, snapshot) {

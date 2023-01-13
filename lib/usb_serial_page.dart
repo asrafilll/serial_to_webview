@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:usb_serial/usb_serial.dart';
 
-class TesPage extends StatefulWidget {
-  const TesPage({super.key});
+class USBSerialCheckerPage extends StatefulWidget {
+  const USBSerialCheckerPage({super.key});
 
   @override
-  State<TesPage> createState() => _TesPageState();
+  State<USBSerialCheckerPage> createState() => _USBSerialCheckerPageState();
 }
 
-class _TesPageState extends State<TesPage> {
+class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
   String _currentStatus = 'Not Connected';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('tes'),
+        title: const Text('USB Serial Page'),
       ),
       body: Center(
         child: Column(
@@ -50,6 +50,7 @@ class _TesPageState extends State<TesPage> {
               // Get the usb serial data by read
               // Then pass the data to widget WebView_Page
             ),
+            const SizedBox(height: 24),
             Text(_currentStatus),
           ],
         ),

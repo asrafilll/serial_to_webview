@@ -35,6 +35,7 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: FutureBuilder(
         future: Future.delayed(
           const Duration(seconds: 5),

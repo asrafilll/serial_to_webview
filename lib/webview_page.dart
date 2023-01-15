@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
-  const WebViewPage({Key? key}) : super(key: key);
+  const WebViewPage({
+    Key? key,
+    this.url,
+  }) : super(key: key);
+
+  final String? url;
 
   @override
   State<WebViewPage> createState() => _WebViewPageState();
@@ -11,13 +16,13 @@ class WebViewPage extends StatefulWidget {
 class _WebViewPageState extends State<WebViewPage> {
   late WebViewController _controller;
 
-  final domainName = 'https://flutter.dev';
+  late var domainName = widget.url;
 
   void _webViewData() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
-      ..loadRequest(Uri.parse(domainName));
+      ..loadRequest(Uri.parse(domainName ?? 'https://flutter.dev'));
   }
 
   @override

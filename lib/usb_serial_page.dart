@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_serial/webview_page.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'package:usb_serial/transaction.dart';
 
@@ -69,6 +70,14 @@ class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
 
     _subscription = _transaction!.stream.listen((String line) {
       setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (builder) => WebViewPage(
+              url: line,
+            ),
+          ),
+        );
         _serialData.add(Text(line));
         if (_serialData.length > 20) {
           _serialData.removeAt(0);
@@ -133,40 +142,25 @@ class _USBSerialCheckerPageState extends State<USBSerialCheckerPage> {
         title: const Text('USB Serial Page'),
       ),
       body: Center(
-          child: Column(children: <Widget>[
-        Text(
-            _ports.isNotEmpty
-                ? "Available Serial Ports"
-                : "No serial devices available",
-            style: Theme.of(context).textTheme.headline6),
-        ..._ports,
-        Text('Status: $_status\n'),
-        Text('info: ${_port.toString()}\n'),
-        ListTile(
-          title: TextField(
-            controller: _textController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Text To Send',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+                _ports.isNotEmpty
+                    ? "Available Serial Ports"
+                    : "No serial devices available",
+                style: Theme.of(context).textTheme.headline6),
+            ..._ports,
+            Text('Status: $_status\n'),
+            Text(
+              'info: ${_port.toString()}\n',
+              textAlign: TextAlign.center,
             ),
-          ),
-          trailing: ElevatedButton(
-            onPressed: _port == null
-                ? null
-                : () async {
-                    if (_port == null) {
-                      return;
-                    }
-                    String data = "${_textController.text}\r\n";
-                    await _port!.write(Uint8List.fromList(data.codeUnits));
-                    _textController.text = "";
-                  },
-            child: const Text("Send"),
-          ),
+            Text("Result Data", style: Theme.of(context).textTheme.headline6),
+            ..._serialData,
+          ],
         ),
-        Text("Result Data", style: Theme.of(context).textTheme.headline6),
-        ..._serialData,
-      ])),
+      ),
     );
   }
 }
